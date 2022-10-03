@@ -22,22 +22,17 @@ public class NoteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String edit = request.getParameter("edit");
-        String path = getServletContext().getRealPath("/WEB-INF/note.txt");
+        String fileLocation = getServletContext().getRealPath("/WEB-INF/note.txt");
+        Note simpleNote = new Note(fileLocation);            
+        request.setAttribute("note", simpleNote);
         
         if (edit != null) {
-            Note editNote = new Note(path);
-            
-            
-            request.setAttribute("note", editNote);
-            
+            String formattedContents = request.getParameter("formattedContents");
             getServletContext().getRequestDispatcher("/WEB-INF/editnote.jsp").
                     forward(request, response);
         } else {
-            Note viewNote = new Note(path);
-            
-            request.setAttribute("note", viewNote);
-            
             getServletContext().getRequestDispatcher("/WEB-INF/viewnote.jsp").
                 forward(request, response);
             

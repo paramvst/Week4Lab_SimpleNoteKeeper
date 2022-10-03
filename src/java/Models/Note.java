@@ -19,17 +19,17 @@ import java.io.Serializable;
  * @author param
  */
 public class Note implements Serializable {
-    private String title = "";
-    private String contents = "";
+    private String title;
+    private String contents;
     
     public Note(String path)
     {
-        BufferedReader br;
+        
         try
         {
             
             // to read files
-            br = new BufferedReader(new FileReader(new File(path)));
+            BufferedReader br = new BufferedReader(new FileReader(new File(path)));
             
             
             title = br.readLine();
@@ -67,7 +67,7 @@ public class Note implements Serializable {
     }
     public void setTitle(String title)
     {
-        this.contents = contents;
+        this.title = title;
     }
     public void setContents(String contents)
     {

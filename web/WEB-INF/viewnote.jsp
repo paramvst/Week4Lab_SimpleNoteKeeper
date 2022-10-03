@@ -14,12 +14,11 @@
     <body>
         <h1>Simple Note Keeper</h1>
         <h2> View Note </h2>
-        
-        <form method="post"  action="note">
-            <b>Title:</b><span>${note.title}</span><br>
-            <b>Contents:</b><span>${note.contents}</span>
-        </form>
-        
+        <div>
+            <b>Title:  </b><span>${note.title}</span><br>
+            <b>Contents:  </b><span>${note.contents}</span>
+        </div>
+        <br>
         <a href="note?edit">Edit</a>
     </body>
 </html>
