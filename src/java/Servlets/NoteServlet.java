@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import Models.Note;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -44,43 +45,58 @@ public class NoteServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+        String edit = request.getParameter("edit");
+        String path = getServletContext().getRealPath("/WEB-INF/note.txt");
+        
+        if (edit != null) {
+            Note editNote = new Note(path);
+            
+            String formattedTitle = editNote.getTitle().replaceAll("<br>", "\r\n");
+            editNote.setTitle(formattedTitle);
+            
+            
+            // Replace any html line breaks with regular line breaks
+            String formattedContents = editNote.getContents().replaceAll("<br>", "\r\n");
+            editNote.setContents(formattedContents);
+            
+            request.setAttribute("note", editNote);
+            
+            getServletContext().getRequestDispatcher("/WEB-INF/editnote.jsp").
+                    forward(request, response);
+        } else {
+            Note viewNote = new Note(path);
+            
+            request.setAttribute("note", viewNote);
+            
+            getServletContext().getRequestDispatcher("/WEB-INF/viewnote.jsp").
+                forward(request, response);
+        }
+   }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String path = getServletContext().getRealPath("/WEB-INF/note.txt");
+        
+        String formattedTitle = request.getParameter("formattedTitle");
+        String formattedContents = request.getParameter("formattedContents");
+        
+        Note editNote = new Note(path);
+        
+        editNote.setTitle(formattedTitle);
+        editNote.setContents(formattedContents);
+        
+        request.setAttribute("note",editNote);
+        editNote.saveNote(path);
+        getServletContext().getRequestDispatcher("/WEB-INF/viewnote.jsp").
+                forward(request, response);
+                
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    
 
 }
