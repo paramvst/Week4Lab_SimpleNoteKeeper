@@ -19,8 +19,8 @@ import java.io.Serializable;
  * @author param
  */
 public class Note implements Serializable {
-    private String title;
-    private String contents;
+    private String title = "";
+    private String contents = "";
     
     public Note(String path)
     {

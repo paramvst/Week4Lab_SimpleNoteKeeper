@@ -16,9 +16,8 @@
         <h2> View Note </h2>
         
         <form method="post"  action="note">
-            <p><b>Title:</b>[$Note.title]<br>
-                <b>Contents:</b>[$Note.contents]
-            </p>
+            <b>Title:</b><span>${note.title}</span><br>
+            <b>Contents:</b><span>${note.contents}</span>
         </form>
         
         <a href="note?edit">Edit</a>

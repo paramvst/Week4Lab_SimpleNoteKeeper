@@ -24,7 +24,6 @@
             </div>
             <input type="submit" value="Save">
         </form>
-        
-        <a href="note?edit">Edit</a>
+                
     </body>
 </html>
